@@ -131,6 +131,26 @@ class BinarySearchTree{
         return false;
     }
 
+    public int max(TreeNode root){
+        TreeNode current = root;
+        TreeNode parent = root;
+        while (current!=null){
+            parent=current;
+            current = current.getRight();
+        }
+        return parent.getElement();
+    }
+    public int min(TreeNode root){
+        TreeNode current = root;
+        TreeNode parent = root;
+        while (current!=null){
+            parent=current;
+            current = current.getLeft();
+        }
+        return parent.getElement();
+    }
+
+
 }
 
 class TreeNode{
@@ -166,9 +186,167 @@ class TreeNode{
 }
 
 
+
+ class AVLNode {
+    private int element;
+    private AVLNode left;
+    private AVLNode right;
+    private int height;
+
+    public AVLNode(int e) {
+        element = e;
+        left = null;
+        right = null;
+        height = 0;
+    }
+    public int getElement()
+    {
+        return element;
+    }
+    public void setElement(int e)
+    {
+        element = e;
+    }
+    public AVLNode getLeft()
+    {
+        return left;
+    }
+    public void setLeft(AVLNode newLeft)
+    {
+        left = newLeft;
+    }
+    public AVLNode getRight()
+    {
+        return right;
+    }
+    public void setRight(AVLNode newRight)
+    {
+        left = newRight;
+    }
+    public int getHeight()
+    {
+        return height;
+    }
+    public void setHeight(int h)
+    {
+        height = h;
+    }
+
+
+}
+
+ class AVLTree {
+    private AVLNode root;
+    private static final int ALLOWED_IMBALANCE = 1;
+
+    // Construct the tree.
+    public AVLTree() {
+        root = null;
+    }
+
+    // Return the height of node a or -1 if null
+    private int height(AVLNode a) {
+        if (a == null)
+            return -1;
+        else
+            return a.getHeight();
+    }
+     public void insert(int x)
+     {
+         root = insert(x, root);
+     }
+     private AVLNode insert(int x, AVLNode t)
+     {
+         if(t == null)
+             return new AVLNode(x);
+         if(x < t.getElement())
+             t.setLeft(insert(x, t.getLeft()));
+         else if(x > t.getElement())
+             t.setRight(insert(x, t.getRight()));
+         else
+             ; //Duplicate, do nothing
+         return balance(t);
+     }
+     private AVLNode rotateWithLeftChild(AVLNode k2)
+     {
+         AVLNode k1 = k2.getLeft();
+         k2.setLeft(k1.getRight());
+         k1.setRight(k2);
+         k2.setHeight(Math.max(height(k2.getLeft()), height(k2.getRight()))
+                 + 1);
+         k1.setHeight(Math.max(height(k1.getLeft()), k2.getHeight()) + 1);
+         return k1;
+     }
+     private AVLNode rotateWithRightChild(AVLNode k1)
+     {
+         AVLNode k2 = k1.getRight();
+         k1.setRight(k2.getLeft());
+         k2.setLeft(k1);
+         k1.setHeight(Math.max(height(k1.getLeft()), height(k1.getRight()))
+                 + 1);
+         k2.setHeight(Math.max(height(k2.getRight()), k1.getHeight()) + 1) ;
+         return k2;
+     }
+     private AVLNode doubleWithLeftChild(AVLNode k3)
+     {
+         k3.setLeft(rotateWithRightChild(k3.getLeft()));
+         return rotateWithLeftChild(k3);
+     }
+     private AVLNode doubleWithRightChild(AVLNode k1)
+     {
+         k1.setRight(rotateWithLeftChild(k1.getRight()));
+         return rotateWithRightChild(k1);
+     }
+     private AVLNode balance(AVLNode t)
+     {
+         if( t == null )
+             return t;
+         if(height(t.getLeft()) - height(t.getRight()) > ALLOWED_IMBALANCE)
+             if(height(t.getLeft().getLeft()) >= height(t.getLeft().getRight()))
+                 t = rotateWithLeftChild(t);
+             else
+                 t = doubleWithLeftChild(t);
+         else
+         if(height(t.getRight()) - height(t.getLeft()) > ALLOWED_IMBALANCE)
+             if(height(t.getRight().getRight()) >= height(t.getRight().getLeft()))
+                 t = rotateWithRightChild(t);
+             else
+                 t = doubleWithRightChild(t);
+         t.setHeight(Math.max(height(t.getLeft()), height(t.getRight())) + 1);
+         return t;
+     }
+     public void printTree()
+     {
+         if(root == null)
+             System.out.println("Empty tree");
+         else
+             printTree(root);
+     }
+     private void printTree(AVLNode t)
+     {
+         if(t != null)
+         {
+             printTree(t.getLeft());
+             System.out.println(t.getElement());
+             printTree(t.getRight());
+         }
+     }
+
+ }
+
+
+
+
+
+
+
+
 public class Main {
 
     public static void main(String[] args) {
+
+        //BinarySearchTree insert,delete,traversal(inorder,preorder,postorder and print)
+
 
         Scanner s = new Scanner(System.in);
         int x;
@@ -213,5 +391,9 @@ public class Main {
             System.out.println(x+" is in the tree");
         else
             System.out.println(x+" is not in the tree");
+
+
+        System.out.println("Max is :"+binarySearchTree.max(binarySearchTree.getRoot()));
+        System.out.println("Min is :"+binarySearchTree.min(binarySearchTree.getRoot()));
     }
 }
