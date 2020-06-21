@@ -202,7 +202,7 @@ class MinMaxHeap {
 
             System.out.println("The Min val is " + minHeap.remove());
 
-            MinMaxHeap maxHeap = new MinMaxHeap(20,0);
+          /*  MinMaxHeap maxHeap = new MinMaxHeap(20,0);
             maxHeap.add(15);
             maxHeap.add(13);
             maxHeap.add(7);
@@ -214,7 +214,18 @@ class MinMaxHeap {
             maxHeap.add(21);
 
             maxHeap.display();
-            System.out.println("The max val is " + maxHeap.poll());
+            System.out.println("The max val is " + maxHeap.poll());*/
 
         }
-    }
+        class RedBlackTree{
+            public RedBlackTree(){
+
+            }
+            public void insert(){
+
+            }
+            public void printTree(){
+
+            }
+        }
+}

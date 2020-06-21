@@ -419,7 +419,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //BinarySearchTree insert,delete,traversal(inorder,preorder,postorder and print)
+        //BinarySearchTree insert,delete,traversal(inorder,preorder,postorder and print),max,min
         //AVL tree height,insert,rotateWithLeftChild,rotateWithRightChild,doubleWithLeftChild,doubleWithRightChild,balance,print
         //More Balanced tree NO CODE
         /*
